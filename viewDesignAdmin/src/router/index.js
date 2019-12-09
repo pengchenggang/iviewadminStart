@@ -10,6 +10,7 @@ const { homeName } = config
 Vue.use(Router)
 const router = new Router({
   routes,
+  base: '/viewDesignAdmin/',
   mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'

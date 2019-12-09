@@ -36,7 +36,7 @@ export default {
   computed: {},
 
   mounted () {
-    this.$api('http://localhost/inDataPhp/select.php').then(res => {
+    this.$api('select.php').then(res => {
       console.info('res', res)
       this.data1 = res.data
     })
