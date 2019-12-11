@@ -5,7 +5,7 @@ const config = (function (global, undefined) {
   /**
      * @description 配置显示在浏览器标签的title
      */
-  config.title = 'iView-admin'
+  config.title = '天房科技'
   /**
    * @description token在Cookie中存储的天数，默认1天
    */

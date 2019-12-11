@@ -1,5 +1,5 @@
 import {
-  login,
+  // login,
   logout,
   getUserInfo,
   getMessage,
@@ -9,6 +9,7 @@ import {
   restoreTrash,
   getUnreadCount
 } from '@/api/user'
+import { api } from '@/api/data'
 import { setToken, getToken } from '@/libs/util'
 
 export default {
@@ -17,8 +18,8 @@ export default {
     userId: '',
     avatorImgPath: '',
     token: getToken(),
-    access: '',
-    hasGetInfo: false,
+    access: localStorage.getItem('access') ? localStorage.getItem('access').split(',') : [],
+    hasGetInfo: localStorage.getItem('hasGetInfo') === 'true',
     unreadCount: 0,
     messageUnreadList: [],
     messageReadedList: [],
@@ -36,6 +37,9 @@ export default {
       state.userName = name
     },
     setAccess (state, access) {
+      // 传入的是个数组
+      let arr = access && access.length > 0 ? access.join(',') : ''
+      localStorage.setItem('access', arr)
       state.access = access
     },
     setToken (state, token) {
@@ -43,6 +47,7 @@ export default {
       setToken(token)
     },
     setHasGetInfo (state, status) {
+      localStorage.setItem('hasGetInfo', status)
       state.hasGetInfo = status
     },
     setMessageCount (state, count) {
@@ -77,16 +82,27 @@ export default {
     handleLogin ({ commit }, { userName, password }) {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
-        login({
-          userName,
-          password
-        }).then(res => {
+        // const sql = ``
+        api('login.php', { username: userName, password }).then(res => {
           const data = res.data
           commit('setToken', data.token)
+          commit('setHasGetInfo', true)
+          commit('setAccess', ['super_admin', 'admin'])
+          // commit('setAccess', ['super_admin', 'admin'])
           resolve()
         }).catch(err => {
           reject(err)
         })
+        // login({
+        //   userName,
+        //   password
+        // }).then(res => {
+        //   const data = res.data
+        //   commit('setToken', data.token)
+        //   resolve()
+        // }).catch(err => {
+        //   reject(err)
+        // })
       })
     },
     // 退出登录
