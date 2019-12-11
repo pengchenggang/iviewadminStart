@@ -20,7 +20,7 @@ const config = (function (global, undefined) {
    * @description api请求基础路径
    */
   config.baseUrl = {
-    dev: 'http://localhost/inDataPhp/',
+    dev: 'http://localhost:8060/inDataPhp/',
     pro: 'http://localhost/inDataPhp/'
   },
     /**
