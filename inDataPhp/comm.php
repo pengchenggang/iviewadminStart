@@ -53,6 +53,51 @@ class database {
     print_r(json_encode($object));
   }
 
+  function login($username,$userpass) {
+    // $sql = "SELECT * FROM person";
+    // $sql = "SELECT * FROM person ";
+    $sql = "SELECT * FROM person where username='{$username}' and userpass='{$userpass}'";
+    // console.log($sql)
+    $result = $this->conn->query($sql);
+    
+    $arr1 = array();
+    $token = '';
+    // $status = 20;
+    $object = (object) ['status' => 20];
+    if ($result->num_rows > 0) {
+        // 输出数据
+        while($row = $result->fetch_assoc()) {
+          array_push($arr1, $row);
+        }
+        // 设置 token
+        $object->data->token = '11' . 'jk' . $arr1[0]['username'] . $arr1[0]['userpass'];
+        // $object->data->token = "SELECT * FROM person where username='{$username}' and userpass='{$userpass}'";
+        // $object->list = $arr1;
+    } else {
+      $object->msg = '用户名密码错误';
+      $object->status = 40;
+    }
+
+    // return $arr1;
+
+    // $object = (object) [
+    //   // 'data' => $arr1,
+    //   // "token" => $token,
+    //   'data' => (object) [
+    //     "token" => $token
+    //   ],
+    //   "status" => $status
+    // ];
+
+    // $object = (object) [
+    //   'data' => $arr1,
+    //   "token" => $token,
+    //   "status" => 20
+    // ];
+    
+    print_r(json_encode($object));
+  }
+
   function update($sqlStr) {
     if (mysqli_query($this->conn, $sqlStr)) {
       $object = (object) [
