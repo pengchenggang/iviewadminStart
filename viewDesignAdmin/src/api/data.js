@@ -1,6 +1,11 @@
 import axios from '@/libs/api.request'
 import { Message } from 'view-design'
 import qs from 'qs'
+import {
+  TOKEN_KEY,
+  getToken
+  // setToken
+} from '@/libs/util'
 
 /**
  * @functionName msgText
@@ -91,9 +96,11 @@ export const api = (url = '', data = {}, config = {}) => {
   return axios.request({
     url,
     data: _data,
+    withCredentials: true,
     headers: {
-      'Content-Type': _contentType
-      // token: getToken() ? getToken() : ''
+      // 'Cache-Control': 'no-cache',
+      'Content-Type': _contentType,
+      token: getToken() ? getToken() : ''
     },
     method: method,
     responseType: responseType

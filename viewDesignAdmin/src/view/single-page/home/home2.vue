@@ -87,6 +87,9 @@ export default {
     //   this.data1 = res.data
     // })
     this.showList()
+    this.$api('test.php').then(res => {
+      console.info('res', res)
+    })
   },
 
   methods: {

@@ -46,6 +46,7 @@ class database {
     // return $arr1;
 
     $object = (object) [
+      'kkk' => $_SESSION['token'],
       'data' => $arr1,
       "status" => 20
     ];
@@ -54,6 +55,7 @@ class database {
   }
 
   function login($username,$userpass) {
+    // session_start();
     // $sql = "SELECT * FROM person";
     // $sql = "SELECT * FROM person ";
     $sql = "SELECT * FROM person where username='{$username}' and userpass='{$userpass}'";
@@ -69,10 +71,15 @@ class database {
         while($row = $result->fetch_assoc()) {
           array_push($arr1, $row);
         }
+
+        $_SESSION['token']='122token';
+        // session_commit();
         // 设置 token
-        $object->data->token = '11' . 'jk' . $arr1[0]['username'] . $arr1[0]['userpass'];
+        // $object->data->token = '11' . 'jk' . $arr1[0]['username'] . $arr1[0]['userpass'] . $_SESSION['token'] . session_id();
+        $object->data->token = session_id() . '-' . $_SESSION['token'];
         // $object->data->token = "SELECT * FROM person where username='{$username}' and userpass='{$userpass}'";
         // $object->list = $arr1;
+       
     } else {
       $object->msg = '用户名密码错误';
       $object->status = 40;
